@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Divertikids</title>
+        <!-- Bootstrap Icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css2?family=Chau+Philomene+One:ital@0;1&display=swap" rel="stylesheet">
+        <!-- SimpleLightbox plugin CSS-->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <!-- Core theme CSS (includes Bootstrap)-->
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'core/css/styles.css' %}">
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="{% static 'core/assets/favicon.ico' %}" />
+
+        <link rel="stylesheet" href="{% static 'core/js/scripts.js' %}">
+        <link rel="stylesheet" href="{% static 'core/assets/img' %}">
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="{% url 'home' %}#page-top">Divertikids</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto my-2 my-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#about">Servicios</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#services">Alcance</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#portfolio">Por definir</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#contact">Contacto</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'productos' %}">Productos</a></li> 
+                        <li class="nav-item"><a class="nav-link" href="{% url 'carrito' %}">Carrito</a></li>   
+                        <!-- <li class="nav-item"><a class="nav-link" href="">Catálogo</a></li> -->
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                              Sorteos
+                              <span class="popup">
+                                <i class="fa-solid fa-screwdriver-wrench"></i> EN CONSTRUCCIÓN
+                              </span>
+                            </a>
+                        </li>
+                          
+                        <style>
+                            .nav-item {
+                              position: relative;
+                            }
+                          
+                            .popup {
+                              visibility: hidden;
+                              background-color: #333;
+                              color: #fff;
+                              text-align: center;
+                              padding: 5px;
+                              border-radius: 5px;
+                              position: absolute;
+                              z-index: 1;
+                              top: 125%; /* Ajusta según la posición deseada */
+                              left: 50%;
+                              transform: translateX(-50%);
+                              white-space: nowrap;
+                              font-size: 16px;
+                              opacity: 0;
+                              transition: opacity 0.3s;
+                            }
+                          
+                            .nav-item .popup::after {
+                              content: "";
+                              position: absolute;
+                              bottom: 100%; /* Flecha hacia abajo */
+                              left: 50%;
+                              margin-left: -5px;
+                              border-width: 5px;
+                              border-style: solid;
+                              border-color: #333 transparent transparent transparent;
+                            }
+                          
+                            .nav-item:hover .popup {
+                              visibility: visible;
+                              opacity: 1;
+                            }
+
+                            .popup i {
+                                margin-right: 5px; /* Espacio entre el icono y el texto */
+                            }
+                        </style> 
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-circle-user"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+
+                                {% if request.user.is_authenticated %}
+                                    <li>
+                                        <a class="nav-link dropdown-item-user" href="{% url 'exit' %}">
+                                            <i class="fa-solid fa-users"></i> Salir
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link dropdown-item-user" href="">
+                                            <i class="fa-solid fa-users"></i> {{user.username}}
+                                        </a>
+
+                                    </li>
+
+                                {% else %}
+                                    <li>
+                                        <a class="nav-link dropdown-item-user" href="{% url 'login' %}">
+                                            <i class="fa-solid fa-users"></i> Iniciar Sesión
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link dropdown-item-user" href="{% url 'register' %}">
+                                            <i class="fa-solid fa-user-plus"></i> Registrarse
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        {% block content %}
+        <!-- Masthead-->
+        <header class="masthead">
+            <div class="container px-4 px-lg-5 h-100">
+                <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+                    <div class="col-lg-8 align-self-end">
+                        <h1 class="text-white font-weight-bold">SOMOS DIVERTIKIDS</h1>
+                        <hr class="divider" />
+                    </div>
+                    <div class="col-lg-8 align-self-baseline">
+                        <p class="text-white-75 mb-5">DivertiKids ofrece una experiencia única de arriendo de juegos infantiles, donde la diversión de los niños y la tranquilidad de los padres se unen. Equipos seguros, diversión sin límites y eventos inolvidables. 
+                        </br>¡Haz de tus celebraciones un momento único con DivertiKids!</p>
+                        <a class="btn btn-primary btn-xl" href="#about">¡Descubrelo!</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Servicios-->
+        <section class="page-section" id="services">
+            <div class="container px-4 px-lg-5 text-center">
+                <h2 class="mb-4">Servicios</h2>
+                <hr class="divider" />
+            </div>
+        </section>    
+        <div id="portfolio">
+            <div class="container-fluid p-0">
+                <div class="row g-0">
+                    <div class="col-lg-4 col-sm-6">
+                        <a class="portfolio-box" href="{% static 'core/assets/img/portfolio/fullsize/1.jpg' %}" title="Project Name">
+                            <img class="img-fluid" src="{% static 'core/assets/img/portfolio/thumbnails/1.jpg' %}" alt="..." />
+                            <div class="portfolio-box-caption">
+                                <div class="project-category text-white-50">Category</div>
+                                <div class="project-name">Project Name</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <a class="portfolio-box" href="{% static 'core/assets/img/portfolio/fullsize/2.jpg' %}" title="Project Name">
+                            <img class="img-fluid" src="{% static 'core/assets/img/portfolio/thumbnails/2.jpg' %}" alt="..." />
+                            <div class="portfolio-box-caption">
+                                <div class="project-category text-white-50">Category</div>
+                                <div class="project-name">Project Name</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <a class="portfolio-box" href="{% static 'core/assets/img/portfolio/fullsize/3.jpg' %}" title="Project Name">
+                            <img class="img-fluid" src="{% static 'core/assets/img/portfolio/thumbnails/3.jpg' %}" alt="..." />
+                            <div class="portfolio-box-caption">
+                                <div class="project-category text-white-50">Category</div>
+                                <div class="project-name">Project Name</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <a class="portfolio-box" href="{% static 'core/assets/img/portfolio/fullsize/4.jpg' %}" title="Project Name">
+                            <img class="img-fluid" src="{% static 'core/assets/img/portfolio/thumbnails/4.jpg' %}" alt="..." />
+                            <div class="portfolio-box-caption">
+                                <div class="project-category text-white-50">Category</div>
+                                <div class="project-name">Project Name</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <a class="portfolio-box" href="{% static 'core/assets/img/portfolio/fullsize/5.jpg' %}" title="Project Name">
+                            <img class="img-fluid" src="{% static 'core/assets/img/portfolio/thumbnails/5.jpg' %}" alt="..." />
+                            <div class="portfolio-box-caption">
+                                <div class="project-category text-white-50">Category</div>
+                                <div class="project-name">Project Name</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <a class="portfolio-box" href="{% static 'core/assets/img/portfolio/fullsize/6.jpg' %}" title="Project Name">
+                            <img class="img-fluid" src="{% static 'core/assets/img/portfolio/thumbnails/6.jpg' %}" alt="..." />
+                            <div class="portfolio-box-caption p-3">
+                                <div class="project-category text-white-50">Category</div>
+                                <div class="project-name">Project Name</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Services-->
+        <section class="page-section" id="range">
+            <div class="container px-4 px-lg-5">
+                <h2 class="text-center mt-0">At Your Service</h2>
+                <hr class="divider" />
+                <div class="row gx-4 gx-lg-5">
+                    <div class="col-lg-3 col-md-6 text-center">
+                        <div class="mt-5">
+                            <div class="mb-2"><i class="bi-gem fs-1 text-primary"></i></div>
+                            <h3 class="h4 mb-2">Sturdy Themes</h3>
+                            <p class="text-muted mb-0">Our themes are updated regularly to keep them bug free!</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 text-center">
+                        <div class="mt-5">
+                            <div class="mb-2"><i class="bi-laptop fs-1 text-primary"></i></div>
+                            <h3 class="h4 mb-2">Up to Date</h3>
+                            <p class="text-muted mb-0">All dependencies are kept current to keep things fresh.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 text-center">
+                        <div class="mt-5">
+                            <div class="mb-2"><i class="bi-globe fs-1 text-primary"></i></div>
+                            <h3 class="h4 mb-2">Ready to Publish</h3>
+                            <p class="text-muted mb-0">You can use this design as is, or you can make changes!</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 text-center">
+                        <div class="mt-5">
+                            <div class="mb-2"><i class="bi-heart fs-1 text-primary"></i></div>
+                            <h3 class="h4 mb-2">Made with Love</h3>
+                            <p class="text-muted mb-0">Is it really open source if it's not made with love?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Call to action-->
+        <section class="page-section bg-dark text-white">
+            <div class="container px-4 px-lg-5 text-center">
+                <h2 class="mb-4">Free Download at Start Bootstrap!</h2>
+                <a class="btn btn-light btn-xl" href="https://startbootstrap.com/theme/creative/">Download Now!</a>
+            </div>
+        </section>
+        <!-- Contact-->
+        <section class="page-section" id="contact">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-8 col-xl-6 text-center">
+                        <h2 class="mt-0">¿Tienes dudas?</h2>
+                        <hr class="divider" />
+                        <p class="text-muted mb-5">Mandanos tus consultas detalladas por este medio.</p>
+                    </div>
+                </div>
+                <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
+                    <div class="col-lg-6">
+                        <!-- * * * * * * * * * * * * * * *-->
+                        <!-- * * SB Forms Contact Form * *-->
+                        <!-- * * * * * * * * * * * * * * *-->
+                        <!-- This form is pre-integrated with SB Forms.-->
+                        <!-- To make this form functional, sign up at-->
+                        <!-- https://startbootstrap.com/solution/contact-forms-->
+                        <!-- to get an API token!-->
+                        <!-- modify this form HTML and place wherever you want your form -->
+<form
+action="https://formspree.io/f/xdkopkeb"
+method="POST"
+>
+<label>
+  Your email:
+  <input type="email" name="email">
+</label>
+<label>
+  Your message:
+  <textarea name="message"></textarea>
+</label>
+<!-- your other form fields go here -->
+<button type="submit">Send</button>
+</form>
+                            <!-- Submit error message-->
+                            <!---->
+                            <!-- This is what your users will see when there is-->
+                            <!-- an error submitting the form-->
+                            <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">¡Error al enviar mensaje!</div></div>
+                            <!-- Submit Button-->
+                            <div class="d-grid"><button class="btn btn-primary btn-xl disabled" id="submitButton" type="submit">Enviar</button></div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-4 text-center mb-5 mb-lg-0">
+                        <i class="bi-phone fs-2 mb-3 text-muted"></i>
+                        <div>+9 4412 7554</div>
+                    </div>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/people/Divertikids/61550844252186/?_rdrhttps%3A%2F%2Fm.facebook.com%2Fprofile.php%3Fid=61550844252186" target="_blank" class="social-icon facebook">
+                    <i class="fa-brands fa-facebook"></i>
+                </a>
+                <a href="https://wa.me/944127554" target="_blank" class="social-icon whatsapp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+                <a href="https://www.instagram.com/divertikids_ccp/" target="_blank" class="social-icon instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+            </div>
+            
+        </section>
+        <!-- Footer-->
+        <footer class="bg-light py-5">
+            <div class="container px-4 px-lg-5"><div class="small text-center text-muted">Copyright &copy; 2024 - Divertikids</div></div>
+        </footer>
+        <style>
+            header.masthead {
+                padding-top: 10rem;
+                padding-bottom: calc(10rem - 4.5rem);
+                background: linear-gradient(to bottom, rgba(51, 47, 47, 0.2) 10%, rgba(51, 47, 47, 0.2) 100%), url("{% static 'core/assets/img/bg-masthead.jpg' %}");
+                background-position: center;
+                background-repeat: no-repeat;
+                background-attachment: scroll;
+                background-size: cover;
+            }
+            .nav-link.dropdown-item-user {
+                color: black !important; 
+                background-color: transparent;
+                transition: background-color 0.3s, color 0.3s;
+            }
+
+            .nav-link.dropdown-item-user:hover {
+                color: white !important;
+                background-color: #662086;
+                box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 3px;
+            }
+
+
+
+            .social-icons {
+                position: fixed;
+                top: 50%;
+                left: 15px;
+                transform: translateY(-50%);
+                display: flex;
+                flex-direction: column;
+                gap: 15px; /* espacio entre los íconos */
+                z-index: 1000; /* asegura que esté por encima de otros elementos */
+            }
+
+            .social-icon {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 50px;
+                height: 50px;
+                color: white;
+                font-size: 24px;
+                text-decoration: none;
+                background-color: #3b5998; 
+                border-radius: 50%;
+                transition: background-color 0.3s, transform 0.3s;
+            }
+
+            .social-icon:hover {
+                transform: scale(1.2); /* Efecto de zoom al pasar el cursor */
+            }
+
+            .facebook {
+                background-color: #3b5998; 
+            }
+
+            .whatsapp {
+                background-color: #25D366;
+            }
+
+            .instagram {
+                background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+            }
+
+
+
+            .dropdown-menu {
+                width: 200px; /* Ancho del cuadro */
+                padding: 10px; /* Espaciado interno */
+            }
+
+            /* Asegurar que el hover ocupe todo el cuadro */
+            .dropdown-item-user {
+                display: block; /* Ocupa todo el espacio del contenedor */
+                padding: 10px 15px; /* Ajusta el relleno */
+                text-align: left; /* Texto alineado a la izquierda */
+            }
+
+            /* Efecto iluminado al pasar el cursor */
+            .dropdown-item-user:hover {
+                background-color: rgba(102, 32, 134, 0.9); /* Fondo morado con opacidad */
+                color: white; /* Letras blancas */
+                border-radius: 5px; /* Esquinas ligeramente redondeadas (opcional) */
+            }
+
+            /* Cambiar el tamaño del ícono dentro del dropdown */
+            .dropdown-item-user i {
+                margin-right: 8px; /* Espaciado entre el ícono y el texto */
+                font-size: 1.2rem; /* Tamaño del ícono */
+            }
+     </style>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- SimpleLightbox plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * *                               SB Forms JS                               * *-->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+        <script src="{% static 'core/js/scripts.js' %}"></script>
+        {% endblock %}
+    </body>
+</html>

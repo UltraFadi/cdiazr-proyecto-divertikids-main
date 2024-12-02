@@ -1,0 +1,263 @@
+{% extends 'core/index.html' %}
+{% load static %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="{% url 'home' %}#page-top">Divertikids</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto my-2 my-lg-0">
+                <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#about">Servicios</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#services">Alcance</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#portfolio">Por definir</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#contact">Contacto</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'productos' %}">Productos</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'carrito' %}"></a></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        Sorteos
+                        <span class="popup">
+                            <i class="fa-solid fa-screwdriver-wrench"></i> EN CONSTRUCCIÓN
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-circle-user"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="nav-link dropdown-item-user" href="{% url 'login' %}"><i class="fa-solid fa-users"></i> Iniciar Sesión</a></li>
+                        <li><a class="nav-link dropdown-item-user" href="{% url 'register' %}"><i class="fa-solid fa-user-plus"></i> Registrarse</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrito de Compras</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      width: 80%;
+      background: #e9ecef;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .section {
+      margin: 20px 0;
+    }
+    .product {
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
+      padding: 10px;
+      background: #ffffff;
+      border-radius: 8px;
+    }
+    .product-name {
+      flex: 2;
+      text-align: left;
+    }
+    .product-price {
+      flex: 1;
+      text-align: center;
+      font-weight: bold;
+    }
+    .quantity-control {
+      flex: 2;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 5px;
+    }
+    button {
+      padding: 8px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      color: #fff;
+    }
+    .quantity-control button {
+      background-color: #007bff;
+      padding: 5px 10px;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .remove-btn {
+      background-color: #dc3545;
+      padding: 5px 10px;
+    }
+    .remove-btn:hover {
+      background-color: #c82333;
+    }
+    .total-section {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 1.5em;
+      color: #333;
+    }
+    .total-section span {
+      font-weight: bold;
+    }
+    .product-container {
+      margin: 10px 0;
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+    }
+    .buy-btn {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      display: block;
+      margin-left: auto; /* Alinea el botón a la derecha */
+    }
+    .buy-btn:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Carrito de Compras</h2>
+    
+    <div class="section products product-container" id="product-container">
+      <h3>Tu Carrito</h3>
+      <div class="product" id="Producto-1">
+        <span class="product-name">Piscina de Pelotas</span>
+        <span class="product-price">$15.000 CLP</span>
+        <div class="quantity-control">
+          <button onclick="changeProductQuantity('Producto 1', -1)">-</button>
+          <span id="Producto 1-quantity">1</span>
+          <button onclick="changeProductQuantity('Producto 1', 1)">+</button>
+          <button class="remove-btn" onclick="removeProduct('Producto 1')">Eliminar</button>
+        </div>
+      </div>
+      <div class="product" id="Producto-2">
+        <span class="product-name">Mini Montaña rusa</span>
+        <span class="product-price">$19.990 CLP</span>
+        <div class="quantity-control">
+          <button onclick="changeProductQuantity('Producto 2', -1)">-</button>
+          <span id="Producto 2-quantity">1</span>
+          <button onclick="changeProductQuantity('Producto 2', 1)">+</button>
+          <button class="remove-btn" onclick="removeProduct('Producto 2')">Eliminar</button>
+        </div>
+      </div>
+      <div class="product" id="Producto-3">
+        <span class="product-name">Tobogán Inflable</span>
+        <span class="product-price">$9.990 CLP</span>
+        <div class="quantity-control">
+          <button onclick="changeProductQuantity('Producto 3', -1)">-</button>
+          <span id="Producto 3-quantity">1</span>
+          <button onclick="changeProductQuantity('Producto 3', 1)">+</button>
+          <button class="remove-btn" onclick="removeProduct('Producto 3')">Eliminar</button>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="total-section">
+      Total a Pagar: $<span id="total">0</span> CLP
+      <button class="buy-btn" onclick="handleBuy()">Comprar</button>
+    </div>
+  </div>
+
+  <script>
+    const cart = [
+        { name: "Producto 1", price: 15000, quantity: 1 },
+        { name: "Producto 2", price: 19990, quantity: 1 },
+        { name: "Producto 3", price: 9990, quantity: 1 }
+    ];
+    const totalDisplay = document.getElementById("total");
+
+    function changeProductQuantity(name, amount) {
+        const priceMapping = { "Producto 1": 15000, "Producto 2": 19990, "Producto 3": 9990 };
+        const quantityElement = document.getElementById(`${name}-quantity`);
+        let quantity = parseInt(quantityElement.textContent) || 0;
+        quantity = Math.max(0, quantity + amount);
+        quantityElement.textContent = quantity;
+
+        if (quantity > 0) {
+            addToCart(name, priceMapping[name], quantity);
+        } else {
+            removeProduct(name);
+        }
+    }
+
+    function addToCart(name, price, quantity) {
+        const itemIndex = cart.findIndex(item => item.name === name);
+        if (itemIndex > -1) {
+            cart[itemIndex].quantity = quantity;
+        } else {
+            cart.push({ name, price, quantity });
+        }
+        updateTotal();
+    }
+
+    function removeFromCart(name) {
+        const itemIndex = cart.findIndex(item => item.name === name);
+        if (itemIndex > -1) {
+            cart.splice(itemIndex, 1);
+            updateTotal();
+        }
+    }
+
+    function removeProduct(name) {
+        removeFromCart(name);
+        const productElement = document.getElementById(`Producto-${name.split(" ")[1]}`);
+        if (productElement) {
+            productElement.remove();
+        }
+    }
+
+    function updateTotal() {
+        let total = 0;
+        cart.forEach(item => {
+            total += item.price * item.quantity;
+        });
+        totalDisplay.textContent = total.toFixed(2);
+    }
+
+    function handleBuy() {
+        alert("¡Gracias por tu compra! El total es $" + totalDisplay.textContent + " CLP");
+    }
+
+    updateTotal();
+</script>
+
+</body>
+</html>
+
+{% endblock %}
